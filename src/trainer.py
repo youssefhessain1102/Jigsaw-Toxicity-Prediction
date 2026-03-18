@@ -39,7 +39,6 @@ class Trainer:
         )
 
         # self.scaler = GradScaler("cuda", enabled=config["training"]["fp16"])
-
         self.accum_steps = config["training"]["gradient_accumulation_steps"]
 
         self.model_save_dir = config["paths"]["model_save_dir"]

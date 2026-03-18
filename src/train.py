@@ -93,21 +93,21 @@ def main():
 
     # Datasets of Train & Test & Validation
     max_length = config['model']['max_length']
-    # train_dataset = ToxicityDataset(
-    #     context_length=max_length,
-    #     df=train_path,
-    #     tokenizer=tokenizer
-    # )
+    train_dataset = ToxicityDataset(
+        context_length=max_length,
+        df=train_path,
+        tokenizer=tokenizer
+    )
     test_dataset = ToxicityDataset(
         context_length=max_length,
         df=test_path,
         tokenizer=tokenizer
     )
-    # val_dataset = ToxicityDataset(
-    #     context_length=max_length,
-    #     df=val_path,
-    #     tokenizer=tokenizer
-    # )
+    val_dataset = ToxicityDataset(
+        context_length=max_length,
+        df=val_path,
+        tokenizer=tokenizer
+    )
 
     # Dataloaders of Train & Test & Validation
     loader_kwargs = {
@@ -116,18 +116,18 @@ def main():
         "pin_memory": config['training']['pin_memory'],
     }
 
-    # train_loader = DataLoader(train_dataset, shuffle=True, **loader_kwargs)
+    train_loader = DataLoader(train_dataset, shuffle=True, **loader_kwargs)
     test_loader = DataLoader(test_dataset, shuffle=False, **loader_kwargs)
-    # val_loader = DataLoader(val_dataset, shuffle=False, **loader_kwargs)
+    val_loader = DataLoader(val_dataset, shuffle=False, **loader_kwargs)
 
-    # # Model Trainer
-    # trainer = Trainer(
-    #     model=model,
-    #     train_loader=train_loader,
-    #     val_loader=val_loader,
-    #     config=config
-    # )
-    # trainer.train()
+    # Model Trainer
+    trainer = Trainer(
+        model=model,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        config=config
+    )
+    trainer.train()
 
     # Saving best Model
     best_model_path = os.path.join(
