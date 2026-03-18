@@ -16,8 +16,7 @@ env/
 .ipynb_checkpoints/
 
 # Data (too large for git)
-data/raw/
-data/processed/
+data/
 *.csv
 *.tsv
 *.parquet
@@ -39,7 +38,6 @@ models/
 # IDE
 .vscode/
 .idea/
-*.iml
 
 # OS
 .DS_Store
