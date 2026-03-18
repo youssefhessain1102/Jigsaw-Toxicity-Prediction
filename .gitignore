@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (too large for git)
+data/raw/
+data/processed/
+*.csv
+*.tsv
+*.parquet
+
+# Model weights (too large for git)
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# HuggingFace cache
+.cache/
+
+# Environment variables
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+runs/
