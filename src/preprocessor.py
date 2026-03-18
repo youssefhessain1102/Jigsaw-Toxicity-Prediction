@@ -10,7 +10,7 @@ def clean_text(text: str) -> str:
     text = re.sub(r"<.*?>", " ", text)
     # Remove URLs
     text = re.sub(r"http\S+|www\S+", " ", text)
-    # Collapse multiple whitespace/newlines into a single space
+    # Collapse multiple whitespace or newlines into a single space
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
