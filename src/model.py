@@ -14,3 +14,4 @@ class DistilBERTClassifier(nn.Module):
         cls_output = self.dropout(cls_output)
         logits = self.classifier(cls_output)
         return logits
+    
