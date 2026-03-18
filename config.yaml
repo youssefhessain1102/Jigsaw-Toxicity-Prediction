@@ -1,0 +1,52 @@
+model:
+  name: "distilbert-base-uncased"
+  num_labels: 6
+  max_length: 128           # DistilBERT max is 512; 128 covers ~90% of comments
+  dropout: 0.3
+
+labels:
+  - toxic
+  - severe_toxic
+  - obscene
+  - threat
+  - insult
+  - identity_hate
+
+training:
+  batch_size: 8
+  epochs: 4
+  learning_rate: 0.00005
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  val_split: 0.15
+  seed: 42
+  fp16: true                # Use mixed precision on your GPU
+  gradient_accumulation_steps: 4   # Effective batch = 8×4 = 32 ✅
+  gradient_checkpointing: true     # Trades speed for memory savings
+  dataloader_num_workers: 0        # 0 = no extra RAM copies of data
+  pin_memory: false                # Only set true if you have spare RAM
+  pos_weights:
+    toxic:         1.12
+    severe_toxic:  19.0
+    obscene:       2.82
+    threat:        68.6
+    insult:        3.09
+    identity_hate: 22.1
+
+data:
+  dataset_name: "Arsive/toxicity_classification_jigsaw"
+  train_split: "train"
+  cache_dir: "./data/cache"
+
+paths:
+  model_save_dir: "./models"
+  best_model_name: "best_model.pt"
+  logs_dir: "./logs"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  threshold: 0.5            # Probability threshold for positive label prediction
+
+streamlit:
+  api_url: "http://localhost:8000"
