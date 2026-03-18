@@ -45,7 +45,7 @@ class PredictService:
             logits = self.model(input_ids=input_ids, attention_mask=attention_mask)
             probs = torch.sigmoid(logits).cpu().numpy()
 
-        # binary_outputs = (probs >= self.threshold).astype(int)
-        output = dict(zip(LABELS, probs[0]))
+        binary_outputs = (probs >= self.threshold).astype(int)
+        output = dict(zip(LABELS, binary_outputs[0]))
 
         return output
