@@ -2,7 +2,7 @@ model:
   name: "distilbert-base-uncased"
   num_labels: 6
   max_length: 128           # DistilBERT max is 512; 128 covers ~90% of comments
-  dropout: 0.3
+  dropout: 0.15
 
 labels:
   - toxic
@@ -14,34 +14,36 @@ labels:
 
 training:
   batch_size: 8
-  epochs: 4
+  epochs: 1
   learning_rate: 0.00005
   weight_decay: 0.01
   warmup_ratio: 0.1
-  val_split: 0.15
+  val_split: 0.1
   seed: 42
-  fp16: true                # Use mixed precision on your GPU
+  fp16: false                      # Use mixed precision on your GPU
   gradient_accumulation_steps: 4   # Effective batch = 8×4 = 32 ✅
   gradient_checkpointing: true     # Trades speed for memory savings
   dataloader_num_workers: 0        # 0 = no extra RAM copies of data
   pin_memory: false                # Only set true if you have spare RAM
-  pos_weights:
-    toxic:         1.12
-    severe_toxic:  19.0
-    obscene:       2.82
-    threat:        68.6
-    insult:        3.09
-    identity_hate: 22.1
+  pos_weights:                     # The square root of pos_weights
+    toxic:         3.07
+    severe_toxic:  9.95
+    obscene:       4.23
+    threat:        18.24
+    insult:        4.39
+    identity_hate: 10.61
 
 data:
-  dataset_name: "Arsive/toxicity_classification_jigsaw"
+  dataset_name: "anitamaxvim/jigsaw-toxic-comments"
   train_split: "train"
+  test_split: "test"
   cache_dir: "./data/cache"
 
 paths:
   model_save_dir: "./models"
   best_model_name: "best_model.pt"
   logs_dir: "./logs"
+  thresholds_name: "thresholds.json"
 
 api:
   host: "0.0.0.0"

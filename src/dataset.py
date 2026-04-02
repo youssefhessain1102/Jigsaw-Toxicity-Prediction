@@ -1,27 +1,28 @@
 import torch
 from torch.utils.data import Dataset
 import pandas as pd
-
-LABELS = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
+from utils.constants import LABELS
 
 class ToxicityDataset(Dataset):
-    def __init__(self, df, tokenizer, context_length):
+    def __init__(self, df, tokenizer, max_length):
         self.data = pd.read_csv(df)
         self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.labels = torch.tensor(self.data[LABELS].values, dtype=torch.float32)
 
-        self.encoded_text = tokenizer(
-            self.data["comment_text"].tolist(),
-            max_length=context_length,
+    def __getitem__(self, index):
+        text = self.data.iloc[index]['comment_text']
+        encoded_text = self.tokenizer(
+            text,
+            max_length=self.max_length,
             padding="max_length",
             truncation=True,
             return_tensors="pt",
         )
-        self.labels = torch.tensor(self.data[LABELS].values, dtype=torch.float32)
 
-    def __getitem__(self, index):
         return {
-            "input_ids": self.encoded_text['input_ids'][index],
-            "attention_mask": self.encoded_text['attention_mask'][index],
+            "input_ids": encoded_text['input_ids'].squeeze(0),
+            "attention_mask": encoded_text['attention_mask'].squeeze(0),
             "labels": self.labels[index]
         }
     def __len__(self):
