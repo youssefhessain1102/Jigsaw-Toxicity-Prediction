@@ -1,0 +1,13 @@
+scikit-learn
+torch
+transformers
+fastapi
+uvicorn[standard]
+streamlit
+pydantic
+numpy
+pyyaml
+requests
+pandas
+matplotlib
+skmultilearn
