@@ -6,7 +6,6 @@ from contextlib import asynccontextmanager
 import yaml
 from fastapi import FastAPI
 
-# Make sure src/ modules (model, preprocessor, utils) are importable
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from src.predict import PredictService

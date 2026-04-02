@@ -9,5 +9,6 @@ async def predict(request: Request, body: PredictRequest):
         service = request.app.state.predict_service
         response = service.predict(body.text)
         return PredictResponse(predictions=response, text_received=body.text)
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
