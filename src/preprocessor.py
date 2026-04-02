@@ -27,8 +27,6 @@ def load_and_preprocess(config: dict) -> pd.DataFrame:
     # Test Dataset
     test_df = dataset[config["data"]["test_split"]].to_pandas()
     test_df['comment_text'] = test_df['comment_text'].apply(clean_text)
-    df = df.sample(frac=0.005, random_state=config['training']['seed'])
-    test_df = test_df.sample(frac=0.05, random_state=config['training']['seed'])
     return df, test_df
 
 def save_cleaned(df: pd.DataFrame, config: dict) -> str:
